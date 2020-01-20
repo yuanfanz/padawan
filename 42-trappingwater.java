@@ -29,38 +29,22 @@ class Solution {
     private Map<Integer, int[]> getMax(int[] nums) {
         Map<Integer, int[]> result = new HashMap<>();
         
+        int leftMax = 0;
+        int rightMax = 0;
         for (int i = 0; i < nums.length; ++i) {
             int[] maxArr = new int[]{0,0};
-            int leftMax = 0;
-            if (i == 0) {
-                leftMax = 0;
-            } else if (i == 1) {
-                leftMax = nums[0];
-            } else {
-                int left = i - 1;
-                while (left >= 0) {
-                    if (nums[left] > leftMax) {
-                        leftMax = nums[left];
-                    }
-                    left--;
+            if (i >= 1) {
+                if (nums[i - 1] > leftMax) {
+                    leftMax = nums[i - 1];
                 }
             }
             maxArr[0] = leftMax;
             result.put(i, maxArr);
         }
-        for (int i = 0; i < nums.length; ++i) {
-            int rightMax = 0;
-            if (i == nums.length - 1) {
-                rightMax = 0;
-            } else if (i == nums.length - 2) {
-                rightMax = nums[nums.length - 1];
-            } else {
-                int right = i + 1;
-                while (right <= nums.length - 1) {
-                    if (nums[right] > rightMax) {
-                        rightMax = nums[right];
-                    }
-                    right++;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (i < nums.length - 1) {
+                if (nums[i + 1] > rightMax) {
+                    rightMax = nums[i + 1];
                 }
             }
             int[] maxArr = result.get(i);
